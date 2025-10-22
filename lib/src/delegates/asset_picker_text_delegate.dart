@@ -241,7 +241,7 @@ class EnglishAssetPickerTextDelegate extends AssetPickerTextDelegate {
   String get unSupportedAssetType => 'Unsupported HEIC asset type.';
 
   @override
-  String get unableToAccessAll => 'Privee has access to selected photos only';
+  String get unableToAccessAll => 'Privee has access to selected photos only • Manage';
 
   @override
   String get viewingLimitedAssetsTip =>
