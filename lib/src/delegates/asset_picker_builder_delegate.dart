@@ -612,12 +612,39 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
   }
 
   /// The tip widget displays when the access is limited.
+  /// Show dialog with options for limited photo access
+  Future<void> _showLimitedAccessOptions(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) => AlertDialog(
+        title: Text(textDelegate.accessAllTip),
+        content: Text(textDelegate.viewingLimitedAssetsTip),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              PhotoManager.presentLimited();
+            },
+            child: Text(textDelegate.changeAccessibleLimitedAssets),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              PhotoManager.openSetting();
+            },
+            child: Text(textDelegate.goToSystemSettings),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// 当访问受限时在底部展示的提示
   Widget accessLimitedBottomTip(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Feedback.forTap(context);
-        PhotoManager.presentLimited();
+        _showLimitedAccessOptions(context);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -2111,7 +2138,7 @@ class DefaultAssetPickerBuilderDelegate
       child: GestureDetector(
         onTap: () {
           if (isPermissionLimited && provider.isAssetsEmpty) {
-            PhotoManager.presentLimited();
+            _showLimitedAccessOptions(context);
             return;
           }
           if (provider.currentPath == null) {
@@ -2522,7 +2549,7 @@ class DefaultAssetPickerBuilderDelegate
     return GestureDetector(
       onTap: () {
         Feedback.forTap(context);
-        PhotoManager.presentLimited();
+        _showLimitedAccessOptions(context);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10)
