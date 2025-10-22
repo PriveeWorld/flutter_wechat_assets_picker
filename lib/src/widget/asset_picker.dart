@@ -126,7 +126,10 @@ class AssetPickerState<Asset, Path> extends State<AssetPicker<Asset, Path>>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
-      requestPermission().then((ps) {
+      // Use getPermissionState to check without showing dialog
+      PhotoManager.getPermissionState(
+        requestOption: widget.permissionRequestOption,
+      ).then((ps) {
         if (!mounted) {
           return;
         }
