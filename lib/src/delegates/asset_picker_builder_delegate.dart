@@ -620,42 +620,52 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        insetPadding: const EdgeInsets.symmetric(horizontal: 55),
-        backgroundColor: const Color(0xFF1C1C1E), // Privee dark background
+        insetPadding: const EdgeInsets.symmetric(horizontal: 35),
+        backgroundColor: Colors.black,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 15),
           decoration: BoxDecoration(
-            color: const Color(0xFF1C1C1E),
+            border: Border.all(
+              color: const Color(0xFF3A3A3C),
+              width: 1,
+            ),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Title
+              // Title with emoji
               Text(
-                textDelegate.unableToAccessAll,
+                '📸 ${textDelegate.unableToAccessAll}',
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  height: 1.5,
                 ),
-                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
               // Description
-              Text(
-                textDelegate.viewingLimitedAssetsTip,
-                style: const TextStyle(
-                  color: Color(0xFFAAAAAA),
-                  fontSize: 13,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 9),
+                child: Text(
+                  textDelegate.viewingLimitedAssetsTip,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    height: 1.43,
+                  ),
                 ),
-                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
               // Button 1: Select more photos (presentLimited)
               SizedBox(
                 width: double.infinity,
+                height: 46,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(dialogContext).pop();
@@ -664,7 +674,6 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF7F00),
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -683,6 +692,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
               // Button 2: Open Settings
               SizedBox(
                 width: double.infinity,
+                height: 46,
                 child: OutlinedButton(
                   onPressed: () {
                     Navigator.of(dialogContext).pop();
@@ -690,8 +700,10 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
                   },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    side: const BorderSide(color: Color(0xFF3A3A3C)),
+                    side: const BorderSide(
+                      color: Color(0xFF3A3A3C),
+                      width: 1,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
