@@ -241,25 +241,25 @@ class EnglishAssetPickerTextDelegate extends AssetPickerTextDelegate {
   String get unSupportedAssetType => 'Unsupported HEIC asset type.';
 
   @override
-  String get unableToAccessAll => 'Privee has access to selected photos only • Manage';
+  String get unableToAccessAll => 'Privee World has access to selected photos only';
 
   @override
   String get viewingLimitedAssetsTip =>
-      'You\'ve given Privee access to selected photos and videos.';
+      'You\'ve given Privee World access to selected photos and videos.';
 
   @override
   String get changeAccessibleLimitedAssets =>
-      'Tap to select more photos';
+      'Tap to select more photos/videos';
 
   @override
-  String get accessAllTip => 'Privee can only access selected photos. '
+  String get accessAllTip => 'Privee World can only access selected photos. '
       'Tap to choose more photos or allow full access in Settings.';
 
   @override
-  String get goToSystemSettings => 'Select More Photos';
+  String get goToSystemSettings => 'Allow full gallery access';
 
   @override
-  String get accessLimitedAssets => 'Continue with limited access';
+  String get accessLimitedAssets => 'Tap to select more photos/videos';
 
   @override
   String get accessiblePathName => 'Accessible assets';

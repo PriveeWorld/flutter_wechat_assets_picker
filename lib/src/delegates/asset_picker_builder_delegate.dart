@@ -831,6 +831,8 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
   Widget permissionOverlay(BuildContext context) {
     final Size size = MediaQuery.sizeOf(context);
     final EdgeInsets padding = MediaQuery.paddingOf(context);
+    final bool isDark = context.theme.brightness == Brightness.dark;
+
     final Widget closeButton = Container(
       margin: const EdgeInsetsDirectional.only(start: 16, top: 4),
       alignment: AlignmentDirectional.centerStart,
@@ -838,7 +840,10 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
         onPressed: () {
           Navigator.maybeOf(context)?.maybePop();
         },
-        icon: const Icon(Icons.close),
+        icon: Icon(
+          Icons.close,
+          color: isDark ? Colors.white : Colors.black87,
+        ),
         padding: EdgeInsets.zero,
         constraints: BoxConstraints.tight(const Size.square(32)),
         tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
@@ -852,14 +857,23 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
         children: <Widget>[
           ScaleText(
             textDelegate.unableToAccessAll,
-            style: const TextStyle(fontSize: 22),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: isDark ? Colors.white : Colors.black87,
+            ),
             textAlign: TextAlign.center,
             semanticsLabel: semanticsTextDelegate.unableToAccessAll,
           ),
-          SizedBox(height: size.height / 30),
+          SizedBox(height: size.height / 40),
           ScaleText(
             textDelegate.accessAllTip,
-            style: const TextStyle(fontSize: 18),
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: isDark ? Colors.white70 : Colors.black54,
+              height: 1.4,
+            ),
             textAlign: TextAlign.center,
             semanticsLabel: semanticsTextDelegate.accessAllTip,
           ),
@@ -868,19 +882,23 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
     );
 
     final Widget goToSettingsButton = MaterialButton(
-      elevation: 0,
+      elevation: 2,
       minWidth: size.width / 2,
       height: appBarItemHeight * 1.25,
       padding: const EdgeInsets.symmetric(horizontal: 24),
       color: themeColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(12),
       ),
       onPressed: PhotoManager.presentLimited,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       child: ScaleText(
         textDelegate.goToSystemSettings,
-        style: const TextStyle(fontSize: 17),
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
         semanticsLabel: semanticsTextDelegate.goToSystemSettings,
       ),
     );
@@ -892,9 +910,16 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
         onTap: () {
           permissionOverlayDisplay.value = false;
         },
-        child: ScaleText(
-          textDelegate.accessLimitedAssets,
-          style: TextStyle(color: interactiveTextColor(context)),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: ScaleText(
+            textDelegate.accessLimitedAssets,
+            style: TextStyle(
+              color: themeColor,
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
       ),
     );
@@ -911,7 +936,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
             sortKey: const OrdinalSortKey(0),
             child: Container(
               padding: EdgeInsets.only(top: padding.top),
-              color: context.theme.canvasColor,
+              color: isDark ? const Color(0xFF121212) : Colors.white,
               child: Column(
                 children: <Widget>[
                   closeButton,
