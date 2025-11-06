@@ -135,6 +135,61 @@ class AssetPickerDelegate {
             settings: pageRouteSettings,
           ),
     );
+
+    // Process videos if callback is provided
+    if (result != null &&
+        result.isNotEmpty &&
+        pickerConfig.shouldProcessVideos &&
+        pickerConfig.videoProcessingCallback != null) {
+
+      final List<AssetEntity> processedResults = [];
+
+      for (final asset in result) {
+        if (asset.type == AssetType.video) {
+          // Show processing indicator
+          if (context.mounted) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: pickerConfig.videoProcessingIndicatorBuilder ??
+                (_) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+            );
+          }
+
+          try {
+            // Process video through callback
+            final processedFile = await pickerConfig.videoProcessingCallback!(
+              asset,
+              context,
+            );
+
+            if (processedFile != null) {
+              // Keep the original AssetEntity but the file has been processed
+              processedResults.add(asset);
+            } else {
+              // Processing failed, use original
+              processedResults.add(asset);
+            }
+          } catch (e) {
+            // Processing error, use original
+            processedResults.add(asset);
+          } finally {
+            // Close processing indicator
+            if (context.mounted) {
+              Navigator.of(context, rootNavigator: true).pop();
+            }
+          }
+        } else {
+          // Not a video, add as-is
+          processedResults.add(asset);
+        }
+      }
+
+      return processedResults;
+    }
+
     return result;
   }
 

@@ -40,6 +40,9 @@ class AssetPickerConfig {
     this.assetsChangeRefreshPredicate,
     this.shouldAutoplayPreview = false,
     this.dragToSelect,
+    this.shouldProcessVideos = false,
+    this.videoProcessingCallback,
+    this.videoProcessingIndicatorBuilder,
   })  : assert(
           pickerTheme == null || themeColor == null,
           'pickerTheme and themeColor cannot be set at the same time.',
@@ -218,4 +221,25 @@ class AssetPickerConfig {
   /// 当 `maxAssets` 为 `1` 时，该功能不可用。
   /// {@endtemplate}
   final bool? dragToSelect;
+
+  /// Whether to process videos through a callback before returning them.
+  /// 是否在返回视频之前通过回调处理它们
+  ///
+  /// This is useful for converting H.265/HEVC videos to H.264 for compatibility.
+  /// 这对于将 H.265/HEVC 视频转换为 H.264 以获得兼容性很有用。
+  final bool shouldProcessVideos;
+
+  /// Callback to process video assets before returning them.
+  /// 在返回视频资源之前处理它们的回调
+  ///
+  /// Typically used for codec conversion or compression.
+  /// 通常用于编解码器转换或压缩。
+  final VideoProcessingCallback? videoProcessingCallback;
+
+  /// Builder for custom video processing indicator.
+  /// 自定义视频处理指示器的构建器
+  ///
+  /// Shows while videos are being processed.
+  /// 在处理视频时显示。
+  final WidgetBuilder? videoProcessingIndicatorBuilder;
 }

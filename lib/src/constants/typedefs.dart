@@ -3,10 +3,11 @@
 // in the LICENSE file.
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:photo_manager/photo_manager.dart' show PermissionState;
+import 'package:photo_manager/photo_manager.dart' show AssetEntity, PermissionState;
 import 'package:provider/provider.dart';
 
 /// Mirroring [ChangeNotifierProvider].
@@ -74,4 +75,16 @@ typedef AssetsChangeRefreshPredicate<Path> = bool Function(
   PermissionState permission,
   MethodCall call,
   Path? path,
+);
+
+/// {@template wechat_assets_picker.VideoProcessingCallback}
+/// Callback to process video assets before returning them.
+/// 在返回视频资源之前处理它们的回调。
+///
+/// Returns processed file or null if processing fails.
+/// 返回处理后的文件，如果处理失败则返回 null。
+/// {@endtemplate}
+typedef VideoProcessingCallback = Future<File?> Function(
+  AssetEntity asset,
+  BuildContext context,
 );
